@@ -15,6 +15,7 @@ import org.xwalk.core.XWalkNavigationHistory;
 import org.xwalk.core.XWalkResourceClient;
 import org.xwalk.core.XWalkUIClient;
 import org.xwalk.core.XWalkView;
+import org.xwalk.core.XWalkCookieManager;
 
 import javax.annotation.Nullable;
 
@@ -26,7 +27,8 @@ class CrosswalkWebView extends XWalkView implements LifecycleEventListener {
 
     private final ResourceClient resourceClient;
     private final UIClient uiClient;
-
+    private final XWalkCookieManager cookieManager;
+	
     private @Nullable String injectedJavaScript;
 
     private boolean isJavaScriptInjected;
@@ -39,6 +41,7 @@ class CrosswalkWebView extends XWalkView implements LifecycleEventListener {
         eventDispatcher = reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher();
         resourceClient = new ResourceClient(this);
         uiClient = new UIClient(this);
+        cookieManager = new XWalkCookieManager();
 
         this.setResourceClient(resourceClient);
         this.setUIClient(uiClient);
@@ -85,6 +88,10 @@ class CrosswalkWebView extends XWalkView implements LifecycleEventListener {
         super.load(url, content);
     }
 
+    public void setCookie(String url, String cookie) {
+        cookieManager.setCookie(url, cookie);
+    }
+        
     public void setInjectedJavaScript(@Nullable String js) {
         injectedJavaScript = js;
     }

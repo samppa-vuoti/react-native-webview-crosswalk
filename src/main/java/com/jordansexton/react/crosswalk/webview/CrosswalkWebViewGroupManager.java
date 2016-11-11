@@ -75,9 +75,13 @@ public class CrosswalkWebViewGroupManager extends ViewGroupManager<CrosswalkWebV
               }
               if (source.hasKey("uri")) {
                   final String url = source.getString("uri");
+                  final String cookie = source.getString("cookie");
                   _activity.runOnUiThread(new Runnable() {
                       @Override
                       public void run () {
+                          if (cookie != null) {
+                              view.setCookie(url, cookie);
+                          }
                           view.load(url, null);
                       }
                   });
