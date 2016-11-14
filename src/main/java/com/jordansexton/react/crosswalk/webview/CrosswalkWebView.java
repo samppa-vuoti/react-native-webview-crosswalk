@@ -151,8 +151,8 @@ class CrosswalkWebView extends XWalkView implements LifecycleEventListener {
                     view.getTitle(),
                     true,
                     url,
-                    navigationHistory.canGoBack(),
-                    navigationHistory.canGoForward()
+                    navigationHistory != null ? navigationHistory.canGoBack() : false,
+                    navigationHistory != null ? navigationHistory.canGoForward() :false
                 )
             );
         }
