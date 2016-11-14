@@ -23,6 +23,7 @@ var CrosswalkWebView = React.createClass({
         source:                  PropTypes.oneOfType([
             PropTypes.shape({
                 uri: PropTypes.string,  // URI to load in WebView
+                cookie: PropTypes.string, 
             }),
             PropTypes.shape({
                 html: PropTypes.string, // static HTML to load in WebView
