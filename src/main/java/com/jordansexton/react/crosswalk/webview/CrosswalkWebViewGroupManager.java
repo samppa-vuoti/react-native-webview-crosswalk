@@ -146,9 +146,9 @@ public class CrosswalkWebViewGroupManager extends ViewGroupManager<CrosswalkWebV
     public Map getExportedCustomDirectEventTypeConstants () {
         return MapBuilder.of(
             NavigationStateChangeEvent.EVENT_NAME,
-            MapBuilder.of("registrationName", "onNavigationStateChange"),
+            MapBuilder.of("registrationName", "onCrosswalkWebViewNavigationStateChange"),
             ErrorEvent.EVENT_NAME,
-            MapBuilder.of("registrationName", "onError")
+            MapBuilder.of("registrationName", "onCrosswalkWebViewError")
         );
     }
 
@@ -157,6 +157,11 @@ public class CrosswalkWebViewGroupManager extends ViewGroupManager<CrosswalkWebV
 
         public XWalkActivityEventListener(CrosswalkWebView _crosswalkWebView) {
             crosswalkWebView = _crosswalkWebView;
+        }
+
+        @Override
+        public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+            crosswalkWebView.onActivityResult(requestCode, resultCode, data);
         }
 
         @Override
