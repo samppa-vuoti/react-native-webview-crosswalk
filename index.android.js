@@ -43,16 +43,13 @@ var CrosswalkWebView = React.createClass({
         if (this.props.url) {
             source.uri = this.props.url;
         }
-        var nativeProps = Object.assign({}, this.props, {
-            onCrosswalkWebViewNavigationStateChange: this.onNavigationStateChange,
-            onCrosswalkWebViewError: this.onError
-        });
         return (
             <NativeCrosswalkWebView
-                { ...nativeProps }
+                { ...this.props }
+                onError={ this.onError }
+                onNavigationStateChange={ this.onNavigationStateChange }
                 ref={ WEBVIEW_REF }
-                source={ resolveAssetSource(source) }
-            />
+                source={ resolveAssetSource(source) }/>
         );
     },
     getWebViewHandle () {
