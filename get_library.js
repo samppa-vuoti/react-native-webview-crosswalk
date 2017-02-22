@@ -8,14 +8,36 @@ var fs   = require('fs');
 var wget = require('node-wget');
 
 function prepareLibrary (filePath) {
-    try {
-        fs.unlinkSync('./libs/' + filePath);
-    }
-    catch (e) {
-        console.log('No previous file');
-    }
-    fs.renameSync(filePath, './libs/' + filePath);
-    console.log('Library baked');
+    exec('unzip -j ' + filePath + ' classes.jar', [], (error, stdout, stderr) => {
+        if (error) {
+            console.log(error);
+        }
+        else {
+            exec('zip -d classes.jar javax\\*', [], (error, stdout, stderr) => {
+                if (error) {
+                    console.log(error);
+                }
+                else {
+                    exec('zip -ro ' + filePath + ' classes.jar', [], (error, stdout, stderr) => {
+                        if (error) {
+                            console.log(error);
+                        }
+                        else {
+                            fs.unlinkSync('classes.jar');
+                            try {
+                                fs.unlinkSync('./libs/' + filePath);
+                            }
+                            catch (e) {
+                                console.log('No previous file');
+                            }
+                            fs.renameSync(filePath, './libs/' + filePath);
+                            console.log('Library baked');
+                        }
+                    });
+                }
+            });
+        }
+    });
 }
 
 function handleDownloaded (error, data) {
