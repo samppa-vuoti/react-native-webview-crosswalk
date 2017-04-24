@@ -37,11 +37,11 @@
   "homepage": "https://github.com/jordansexton/react-native-webview-crosswalk",
   "peerDependencies": {
     "react": ">=15.3.0",
-    "react-native": ">=0.32.0"
+    "react-native": ">=0.32.0",
+    "react-addons-pure-render-mixin": ">=15.5.2"
   },
   "dependencies": {
-    "node-wget": "0.4.2",
-    "react-addons-pure-render-mixin": "^15.5.2"
+    "node-wget": "0.4.2"
   },
   "devDependencies": {
     "babel-eslint": "6.1.2",
