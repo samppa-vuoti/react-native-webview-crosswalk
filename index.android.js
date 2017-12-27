@@ -1,22 +1,20 @@
-'use strict';
-
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactNative, { requireNativeComponent, View } from 'react-native';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
-var {
+const {
     NativeModules: { UIManager, CrosswalkWebViewManager: { JSNavigationScheme } }
 } = ReactNative;
 
-var resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
+const resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
 
-var WEBVIEW_REF = 'crosswalkWebView';
+const WEBVIEW_REF = 'crosswalkWebView';
 
-var CrosswalkWebView = React.createClass({
-    mixins:    [PureRenderMixin],
-    statics:   { JSNavigationScheme },
-    propTypes: {
+class CrosswalkWebView extends PureComponent {
+    static JSNavigationScheme = JSNavigationScheme;
+
+    static propTypes = {
         injectedJavaScript:      PropTypes.string,
         localhost:               PropTypes.bool.isRequired,
         onError:                 PropTypes.func,
@@ -33,12 +31,12 @@ var CrosswalkWebView = React.createClass({
         ]),
         url:                     PropTypes.string,
         ...View.propTypes
-    },
-    getDefaultProps () {
-        return {
-            localhost: false
-        };
-    },
+    }
+
+    static defaultProps = {
+        localhost: false,
+    }
+
     render () {
         var source = this.props.source || {};
         if (this.props.url) {
@@ -55,45 +53,45 @@ var CrosswalkWebView = React.createClass({
                 source={ resolveAssetSource(source) }
             />
         );
-    },
-    getWebViewHandle () {
+    }
+    getWebViewHandle() {
         return ReactNative.findNodeHandle(this.refs[WEBVIEW_REF]);
-    },
-    onNavigationStateChange (event) {
+    }
+    onNavigationStateChange(event) {
         var { onNavigationStateChange } = this.props;
         if (onNavigationStateChange) {
             onNavigationStateChange(event.nativeEvent);
         }
-    },
-    onError (event) {
+    }
+    onError(event) {
         var { onError } = this.props;
         if (onError) {
             onError(event.nativeEvent);
         }
-    },
-    goBack () {
+    }
+    goBack() {
         UIManager.dispatchViewManagerCommand(
             this.getWebViewHandle(),
             UIManager.CrosswalkWebView.Commands.goBack,
             null
         );
-    },
-    goForward () {
+    }
+    goForward() {
         UIManager.dispatchViewManagerCommand(
             this.getWebViewHandle(),
             UIManager.CrosswalkWebView.Commands.goForward,
             null
         );
-    },
-    reload () {
+    }
+    reload() {
         UIManager.dispatchViewManagerCommand(
             this.getWebViewHandle(),
             UIManager.CrosswalkWebView.Commands.reload,
             null
         );
     }
-});
+}
 
-var NativeCrosswalkWebView = requireNativeComponent('CrosswalkWebView', CrosswalkWebView);
+const NativeCrosswalkWebView = requireNativeComponent('CrosswalkWebView', CrosswalkWebView);
 
 export default CrosswalkWebView;
