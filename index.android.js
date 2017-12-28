@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactNative, { requireNativeComponent, View } from 'react-native';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 const {
     NativeModules: { UIManager, CrosswalkWebViewManager: { JSNavigationScheme } }
