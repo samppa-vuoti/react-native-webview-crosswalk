@@ -56,7 +56,7 @@ class CrosswalkWebView extends PureComponent {
     getWebViewHandle() {
         return ReactNative.findNodeHandle(this.refs[WEBVIEW_REF]);
     }
-    onNavigationStateChange(event) {
+    onNavigationStateChange = (event) => {
         var { onNavigationStateChange } = this.props;
         if (onNavigationStateChange) {
             onNavigationStateChange(event.nativeEvent);
