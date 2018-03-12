@@ -62,27 +62,27 @@ class CrosswalkWebView extends PureComponent {
             onNavigationStateChange(event.nativeEvent);
         }
     }
-    onError(event) {
+    onError = (event) => {
         var { onError } = this.props;
         if (onError) {
             onError(event.nativeEvent);
         }
     }
-    goBack() {
+    goBack = () => {
         UIManager.dispatchViewManagerCommand(
             this.getWebViewHandle(),
             UIManager.CrosswalkWebView.Commands.goBack,
             null
         );
     }
-    goForward() {
+    goForward = () => {
         UIManager.dispatchViewManagerCommand(
             this.getWebViewHandle(),
             UIManager.CrosswalkWebView.Commands.goForward,
             null
         );
     }
-    reload() {
+    reload = () => {
         UIManager.dispatchViewManagerCommand(
             this.getWebViewHandle(),
             UIManager.CrosswalkWebView.Commands.reload,
